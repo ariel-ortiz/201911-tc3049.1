@@ -17,6 +17,22 @@ class Student
     self
   end
 
+  def display_information
+    display_personal_information
+    display_disclaimer
+  end
+
+  def scholarship_worthy?
+    # Nothing reasonable to do if this student has currently no grades.
+    return -1 if @grades.empty?
+
+    # A student is worthy of a scholarship if he/she has good grades and
+    # is poor.
+    (average >= GOOD_GRADE) and (@anual_income < POVERTY_LIMIT)
+  end
+
+  private
+
   def average
     sum_of_grades = 0
     @grades.each do |grade|
@@ -35,20 +51,6 @@ class Student
     puts 'The contents of this class must not be considered an offer,'
     puts 'proposal, understanding or agreement unless it is confirmed'
     puts 'in a document signed by at least five blood-sucking lawyers.'
-  end
-
-  def display_information
-    display_personal_information
-    display_disclaimer
-  end
-
-  def scholarship_worthy?
-    # Nothing reasonable to do if this student has currently no grades.
-    return -1 if @grades.empty?
-
-    # A student is worthy of a scholarship if he/she has good grades and
-    # is poor.
-    (average >= GOOD_GRADE) and (@anual_income < POVERTY_LIMIT)
   end
 
 end

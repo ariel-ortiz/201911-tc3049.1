@@ -21,12 +21,12 @@ class Student
     # Display Personal Information
     puts "Name: #{ @name } ID: #{ @id }"
     puts "Anual income: #{ @anual_income }"
-    value = 0
+    sum_of_grades = 0
     @grades.each do |grade|
-      value += grade
+      sum_of_grades += grade
     end
-    value = value / @grades.size.to_f
-    puts "Grade average: #{ value }"
+    average = sum_of_grades / @grades.size.to_f
+    puts "Grade average: #{ average }"
 
     # Display Disclaimer
     puts 'The contents of this class must not be considered an offer,'
@@ -40,12 +40,12 @@ class Student
 
     # A student is worthy of a scholarship if he/she has good grades and
     # is poor.
-    value = 0
+    sum_of_grades = 0
     @grades.each do |grade|
-      value += grade
+      sum_of_grades += grade
     end
-    value = value / @grades.size.to_f
-    (value >= GOOD_GRADE) and (@anual_income < POVERTY_LIMIT)
+    average = sum_of_grades / @grades.size.to_f
+    (average >= GOOD_GRADE) and (@anual_income < POVERTY_LIMIT)
   end
 
 end

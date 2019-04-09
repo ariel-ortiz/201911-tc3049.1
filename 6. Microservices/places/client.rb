@@ -2,8 +2,8 @@ require 'json'
 require 'faraday'
 
 # Remember to change the next two lines
-URL_PLACES = 'https://some.end.point.amazonaws.com/default/places'
-API_KEY = 'your-api-key'
+URL_PLACES = 'https://rfjfqj9pl4.execute-api.us-west-2.amazonaws.com/default/newplaces'
+API_KEY = 'ONT0ZK2e0s9dnQbbIrpE189oTraJbbfu5JXjVzse'
 
 def request_place(place=nil)
   connection = Faraday.new(url: URL_PLACES)
@@ -81,16 +81,20 @@ def line
   puts '~' * 60
 end
 
-def game_over
+def game_over(score)
   line
   puts 'G A M E   O V E R'
+  line
+  puts "Your score: #{score}"
   line
 end
 
 def main
   next_place_name = request_starting_place_name
+  score = 0
   loop do
     place = request_place(next_place_name)
+    score += place['points'] if place['points']
     statement = place['statement']
     puts statement
     puts
@@ -101,7 +105,7 @@ def main
       next_place_name = options[selection]['target']
       line
     else
-      game_over
+      game_over(score)
       break
     end
   end

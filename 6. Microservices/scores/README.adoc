@@ -1,0 +1,72 @@
+== Using DynamoDB with Ruby
+
+NOTE: The following instructions assume that your development environment is in AWS Cloud9. If this is not the case, check the https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html[Configuring the AWS CLI] documentation.
+
+. Install the `aws-sdk` Ruby gem. At the terminal, type:
++
+[source, bash]
+sudo gem install aws-sdk
+
+. Go to the https://console.aws.amazon.com/dynamodb/home[DynamoDB Console] and create a table called `scores` with the following keys:
+[horizontal]
+Primary partition key:: `initials` of type string
+Primary sort key:: `timestamp` of type string
+
+. Now you can try running the following Ruby scripts:
++
+[source, bash]
+ruby dynamodb_scan.rb
++
+[source, bash]
+ruby dynamodb_put_item.rb
+
+== A WebService Using DynamoDB
+
+. Create a Lambda function called `scores` and its corresponding gateway. Then copy the code contained in the `lambda_function.rb` file.
+
+. Test it within the Lambda function console using the following JSON events:
++
+.Test_1
+[source, json]
+----
+{
+  "httpMethod": "GET"
+}
+----
++
+.Test_2
+[source, json]
+----
+{
+  "httpMethod": "POST",
+  "body": "{\"initials\": \"SS\", \"score\": 150}"
+}
+----
+
+. Test it with `curl`, but remember to change the URL and the API Key. At the terminal type:
++
+.Test_3
+[source, bash]
+----
+curl -i \
+https://some.end.point.amazonaws.com/default/scores \
+-H 'x-api-key: some_api_key'
+----
++
+.Test_4
+[source, bash]
+----
+curl -i \
+https://some.end.point.amazonaws.com/default/scores \
+-H 'x-api-key: some_api_key' \
+-X POST \
+-d '{"initials": "JS", "score": 199}'
+----
+
+. Test it with the following Ruby scripts:
++
+[source, bash]
+ruby client_get.rb
++
+[source, bash]
+ruby client_post.rb

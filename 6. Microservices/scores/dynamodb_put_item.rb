@@ -1,5 +1,4 @@
 require 'aws-sdk-dynamodb'
-require 'pp'
 
 dynamodb = Aws::DynamoDB::Client.new
 
